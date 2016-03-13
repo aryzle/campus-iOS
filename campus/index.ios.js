@@ -10,23 +10,8 @@ import React, {
   Text,
   View
 } from 'react-native';
-import bgGeo from 'react-native-background-geolocation';
-
-bgGeo.addGeofence({
-  identifier: "Home",
-  radious: 200,
-  latitude: 35.912343,
-  longtitude: -79.069016,
-  notifyOnEntry: true
-});
 
 class campus extends Component {
-
-  constructor() {
-    super();
-    let me = this;
-  }
-
   render() {
     return (
       <View style={styles.container}>

@@ -30,7 +30,7 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>App requires background location tracking</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>App requires location when in use</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

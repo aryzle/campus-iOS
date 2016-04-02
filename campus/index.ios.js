@@ -1,11 +1,12 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * Campus iOS app
+ * https://github.com/aryzle/campus-iOS
  */
 'use strict';
 import React, {
   AppRegistry,
   Component,
+  ListView,
   StyleSheet,
   Text,
   View
@@ -22,7 +23,16 @@ class campus extends Component {
       initialPosition: 'uknown',
       lastPosition: 'unknown',
       onCampus: false,
+      location: "UNC",
     }
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state.users = ds.cloneWithRows([{ name: "Lauren O'Connor",
+                                           onCampus: true },
+                                         { name: "Samantha Smith",
+                                           onCampus: false },
+                                         { name: "Thomas Yang",
+                                           onCampus: true }
+                                        ])
   }
 
   componentDidMount() {
@@ -47,19 +57,44 @@ class campus extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
+        <Toolbar location={this.state.location}/>
+        <View style={styles.content}>
+          <ListView
+            dataSource={this.state.users}
+            renderRow={this._renderRow}
+          />
+        </View>
         <Text style={styles.instructions}>
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
         </Text>
-        <User name="Arya Seghatoleslami" onCampus={this.state.onCampus} />
       </View>
     );
+  }
+
+  _renderRow (rowData) {
+    return (
+      <View style={styles.row}>
+        <Text style={styles.username}>{rowData.name}</Text>
+        <Text style={styles.onCampus}>{rowData.onCampus? "yup" : "nope"}</Text>
+      </View>
+    )     
+  }
+}
+
+class Toolbar extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    let style = this.props.location === "RPI" ? styles.RPItoolbar :
+                                                styles.UNCtoolbar;
+    return (
+      <View style={style}>
+        <Text style={styles.toolbarTitle}>Campüs</Text>
+      </View>
+    )
   }
 }
 
@@ -70,7 +105,7 @@ class User extends Component {
 
   render() {
     return (
-      <Text>
+      <Text style={styles.user}>
           {this.props.name + (this.props.onCampus? " yup" : " nope")}
       </Text>
     );
@@ -80,14 +115,36 @@ class User extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
+  UNCtoolbar: {
+    backgroundColor:'#7BAFD4',
+    paddingTop: 30,
+    paddingBottom: 10,
+  },
+  RPItoolbar: {
+    backgroundColor:'#D80502',
+    paddingTop: 30,
+    paddingBottom: 10,
+  },
+  toolbarTitle: {
     textAlign: 'center',
-    margin: 10,
+    fontWeight: 'bold',
+  },
+  content: {
+    flex: 1,
+  },
+  row: {
+    flexDirection: 'row',
+    padding: 10,
+    backgroundColor: '#F6F6F6',
+  },
+  username: {
+    textAlign: 'left',
+    flex: 1,
+  },
+  onCampus: {
+    width: 50,
+    textAlign:'center',
   },
   instructions: {
     textAlign: 'center',

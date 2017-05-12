@@ -1,2 +1,2 @@
-# campus-iOS
-Are you on campus? iOS app
+# campvs
+Are you on campus?
